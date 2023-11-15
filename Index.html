@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number List Processor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1 class="page-title">Number Filter</h1>
+    <div class="container">
+        <div class="block" id="control-panel">
+            <div id="actions" class="control-item">
+                <button onclick="filterNumbers()">Filter</button>
+                <button onclick="copyResults()">Copy</button>
+                <button onclick="saveTextFile()">Save .txt</button>
+            </div>
+            <div id="results" class="control-item">
+                <div id="results-content"></div>
+                <p>Total: <span id="results-total">0</span></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="block half" id="own-list">
+                <h2>Own List</h2>
+                <textarea id="own-textarea" placeholder="Enter numbers here..."></textarea>
+                <p>Total Number: <span id="own-total">0</span></p>
+                <button onclick="removeDuplicates('own')">Remove Duplicate</button>
+            </div>
+            <div class="block half" id="outside-list">
+                <h2>Outside List</h2>
+                <textarea id="outside-textarea" placeholder="Enter numbers here..."></textarea>
+                <p>Total Number: <span id="outside-total">0</span></p>
+                <button onclick="removeDuplicates('outside')">Remove Duplicate</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
