@@ -3,41 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List Splitter</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Number Filter</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <h1 class="page-title">Number Filter</h1>
     <div class="container">
-        <div class="input-section">
-            <h1>List Splitter</h1>
-            <textarea id="nameList" placeholder="Paste your list here" oninput="updateNameCount()"></textarea>
-            <div class="input-group">
-                <span id="nameCount">Count: 0</span>
+        <div class="block" id="control-panel">
+            <div id="actions" class="control-item">
+                <button onclick="filterNumbers()">Filter</button>
+                <button onclick="copyResults()">Copy</button>
+                <button onclick="saveTextFile()">Save .txt</button>
             </div>
-            <div class="input-group">
-                <button id="randomize">Randomize</button>
-            </div>
-            <div class="input-group">
-                <label for="splitNumber">Chunk Size</label>
-                <input type="number" id="splitNumber" min="1" placeholder="Enter chunk size">
-            </div>
-            <div class="input-group">
-                <label for="filePrefix">File Name Prefix</label>
-                <input type="text" id="filePrefix" placeholder="Part_" value="Part_">
-            </div>
-            <div class="button-group">
-                <button id="run">Run</button>
-                <button id="reset">Reset</button>
+            <div id="results" class="control-item">
+                <div id="results-content"></div>
+                <p>Total: <span id="results-total">0</span></p>
             </div>
         </div>
-        <div class="output-section">
-            <div id="fileList"></div>
-            <div id="fileCount" style="display:none;">File Count: 0</div>
-            <button id="download" style="display:none;">Download</button>
+        <div class="row">
+            <div class="block half" id="own-list">
+                <h2>Own List</h2>
+                <textarea id="own-textarea" placeholder="Enter numbers here..."></textarea>
+                <p>Total Number: <span id="own-total">0</span></p>
+                <button onclick="removeDuplicates('own')">Remove Duplicate</button>
+            </div>
+            <div class="block half" id="outside-list">
+                <h2>Outside List</h2>
+                <textarea id="outside-textarea" placeholder="Enter numbers here..."></textarea>
+                <p>Total Number: <span id="outside-total">0</span></p>
+                <button onclick="removeDuplicates('outside')">Remove Duplicate</button>
+            </div>
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-    <script src="scripts.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
