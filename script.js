@@ -1,10 +1,9 @@
-// script.js
 document.addEventListener('DOMContentLoaded', () => {
     const ownTextarea = document.getElementById('own-textarea');
     const outsideTextarea = document.getElementById('outside-textarea');
     const resultsContent = document.getElementById('results-content');
     const resultsTotal = document.getElementById('results-total');
-    
+
     ownTextarea.addEventListener('input', () => updateTotalNumber(ownTextarea, 'own-total'));
     outsideTextarea.addEventListener('input', () => updateTotalNumber(outsideTextarea, 'outside-total'));
 
@@ -22,13 +21,22 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     window.filterNumbers = function() {
-        const ownNumbers = new Set(ownTextarea.value.split('\n').map(line => line.trim()).filter(line => line !== ''));
+        const worker = new Worker('worker.js');
+        const ownNumbers = ownTextarea.value.split('\n').map(line => line.trim()).filter(line => line !== '');
         const outsideNumbers = outsideTextarea.value.split('\n').map(line => line.trim()).filter(line => line !== '');
-        const result = outsideNumbers.filter(number => !ownNumbers.has(number));
 
-        resultsContent.innerText = result.join('\n');
-        resultsTotal.textContent = result.length;
+        worker.postMessage({ ownNumbers, outsideNumbers });
+
+        worker.onmessage = function(event) {
+            const { result } = event.data;
+            displayResults(result);
+        };
     };
+
+    function displayResults(numbers) {
+        resultsContent.innerText = numbers.join('\n');
+        resultsTotal.textContent = numbers.length;
+    }
 
     window.copyResults = function() {
         const content = resultsContent.innerText;
