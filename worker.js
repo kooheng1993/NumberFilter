@@ -1,4 +1,3 @@
-// worker.js
 self.onmessage = function(event) {
     const { ownNumbers, outsideNumbers } = event.data;
     const ownSet = new Set(ownNumbers);
