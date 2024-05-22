@@ -1,7 +1,5 @@
+// script.js
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('filter-form');
-    const results = document.getElementById('results');
-
     document.querySelectorAll('textarea').forEach(area => {
         area.addEventListener('input', updateTotalNumber);
     });
@@ -10,33 +8,32 @@ document.addEventListener('DOMContentLoaded', () => {
         updateTotalNumber({ target: textarea });
     });
 
-    form.addEventListener('submit', event => {
-        event.preventDefault();
-        filterNumbers();
-    });
-
     function updateTotalNumber(event) {
         let lines = event.target.value.split('\n').filter(line => line.trim() !== '');
         let totalId = event.target.id === 'own-textarea' ? 'own-total' : 'outside-total';
         document.getElementById(totalId).textContent = lines.length;
     }
 
-    function removeDuplicates(listId) {
+    window.removeDuplicates = function(listId) {
         let textarea = document.getElementById(listId + '-textarea');
         let lines = textarea.value.split('\n').map(line => line.trim()).filter(line => line !== '');
         let uniqueLines = [...new Set(lines)];
         textarea.value = uniqueLines.join('\n');
         updateTotalNumber({ target: textarea });
-    }
+    };
 
-    function filterNumbers() {
-        let ownNumbers = new Set(document.getElementById('own-textarea').value.split('\n').map(line => line.trim()).filter(line => line !== ''));
-        let outsideNumbers = document.getElementById('outside-textarea').value.split('\n').map(line => line.trim()).filter(line => line !== '');
+    window.filterNumbers = function() {
+        const worker = new Worker('worker.js');
+        const ownNumbers = document.getElementById('own-textarea').value.split('\n').map(line => line.trim()).filter(line => line !== '');
+        const outsideNumbers = document.getElementById('outside-textarea').value.split('\n').map(line => line.trim()).filter(line => line !== '');
 
-        let result = outsideNumbers.filter(number => !ownNumbers.has(number));
+        worker.postMessage({ ownNumbers, outsideNumbers });
 
-        displayResults(result);
-    }
+        worker.onmessage = function(event) {
+            const { result } = event.data;
+            displayResults(result);
+        };
+    };
 
     function displayResults(numbers) {
         const resultsContent = document.getElementById('results-content');
