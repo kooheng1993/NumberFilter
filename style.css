@@ -1,3 +1,4 @@
+/* styles.css */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -28,15 +29,14 @@ body {
     text-align: center;
 }
 
-
 #actions {
-    flex-shrink: 0; /* 防止按钮区域缩小 */
-    margin-right: 20px; /* 与结果区域之间保持间隔 */
-    margin-bottom: 20px; /* 在按钮和结果区域之间添加间距 */
+    flex-shrink: 0;
+    margin-right: 20px;
+    margin-bottom: 20px;
 }
 
 #results {
-    flex-grow: 1; /* 让结果区域填满剩余空间 */
+    flex-grow: 1;
 }
 
 #actions button {
@@ -76,8 +76,8 @@ textarea {
     font-family: Arial, sans-serif;
     font-size: 14px;
     resize: vertical;
-    padding: 10px; /* 添加内边距 */
-    box-sizing: border-box; /* 确保内边距不会改变元素的总宽度 */
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 #results-content {
@@ -122,7 +122,7 @@ textarea {
     cursor: pointer;
     font-size: 14px;
     transition: background-color 0.3s;
-    margin-top: 10px; /* 增加顶部间距 */
+    margin-top: 10px;
 }
 
 .block button:hover {
@@ -130,9 +130,8 @@ textarea {
 }
 
 .page-title {
-    text-align: center; /* 居中标题 */
-    margin-top: 20px; /* 顶部间距 */
-    font-size: 28px; /* 字体大小 */
-    color: #333; /* 字体颜色 */
+    text-align: center;
+    margin-top: 20px;
+    font-size: 28px;
+    color: #333;
 }
-
