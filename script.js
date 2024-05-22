@@ -29,13 +29,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
         worker.onmessage = function(event) {
             const { result } = event.data;
-            displayResults(result);
+            displayResultsInChunks(result);
         };
     };
 
-    function displayResults(numbers) {
-        resultsContent.innerText = numbers.join('\n');
+    function displayResultsInChunks(numbers) {
+        resultsContent.innerText = '';
         resultsTotal.textContent = numbers.length;
+        
+        const chunkSize = 100; // 每次处理和显示100个结果
+        let index = 0;
+
+        function processChunk() {
+            const chunk = numbers.slice(index, index + chunkSize);
+            resultsContent.innerText += chunk.join('\n') + '\n';
+            index += chunkSize;
+
+            if (index < numbers.length) {
+                requestAnimationFrame(processChunk); // 使用requestAnimationFrame逐步处理
+            }
+        }
+
+        processChunk();
     }
 
     window.copyResults = function() {
